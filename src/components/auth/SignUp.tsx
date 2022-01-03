@@ -1,28 +1,34 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/index';
+import { useDispatch } from 'react-redux';
 import { signup, setError } from '../../store/actions/authActions';
+import { useNavigate } from 'react-router-dom';
 
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import { Alert, Button, TextField, FormControlLabel, Checkbox, Typography, Container } from '@mui/material';
+import Loader from '../Loader';
 
 export default function SignUp() {
     const [firstName, setFirstName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [signUpError, setSignUpError] = useState('');
+    
     const dispatch = useDispatch();
-    const { error } = useSelector((state: RootState) => state.auth);
+    const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(error) {
-      dispatch(setError(''));
-    }
-    dispatch(signup({ firstName, email, password }, () => console.log(error) ));
+    setLoading(true);
+    dispatch(signup({ firstName, email, password }, 
+      () => {
+        navigate('/signIn');
+      },
+      (error) => {
+        dispatch(setError('SignUp error: ' + error));
+        console.log(error);
+        setSignUpError(error);
+        setLoading(false);
+      }));
   }
 
   return (
@@ -31,6 +37,8 @@ export default function SignUp() {
             Sign up
           </Typography>
           <Container component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            
+          {signUpError && <Alert severity="error">{signUpError}</Alert>}
           <TextField
               required
               fullWidth
@@ -62,13 +70,16 @@ export default function SignUp() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
+            { !loading ?
+              <Button
               type="submit"
               fullWidth
               variant="contained"
-            >
+              >
               Sign Up
-            </Button>
+              </Button> :
+              <Loader/>
+            }
           </Container>
       </Container>
   );

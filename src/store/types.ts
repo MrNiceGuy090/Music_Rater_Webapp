@@ -2,7 +2,6 @@ export const SET_USER = 'SET_USER';
 export const SIGN_OUT = 'SIGN_OUT';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_ERROR = 'SET_ERROR';
-export const NEED_VERIFICATION = 'NEED_VERIFICATION';
 export const SET_SUCCESS = 'SET_SUCCESS';
 
 export interface User {
@@ -16,7 +15,6 @@ export interface AuthState {
   authenticated: boolean;
   loading: boolean;
   error: string;
-  needVerification: boolean;
   success: string;
 }
 
@@ -51,13 +49,9 @@ interface SetErrorAction {
   payload: string;
 }
 
-interface NeedVerificationAction {
-  type: typeof NEED_VERIFICATION;
-}
-
 interface SetSuccessAction {
   type: typeof SET_SUCCESS;
   payload: string;
 }
 
-export type AuthAction = SetUserAction | SetLoadingAction | SignOutAction | SetErrorAction | NeedVerificationAction | SetSuccessAction;
+export type AuthAction = SetUserAction | SetLoadingAction | SignOutAction | SetErrorAction | SetSuccessAction;

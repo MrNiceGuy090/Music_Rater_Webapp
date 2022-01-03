@@ -1,11 +1,10 @@
-import { AuthAction, AuthState, SET_USER, SET_LOADING, SIGN_OUT, SET_ERROR, NEED_VERIFICATION, SET_SUCCESS } from '../types';
+import { AuthAction, AuthState, SET_USER, SET_LOADING, SIGN_OUT, SET_ERROR, SET_SUCCESS } from '../types';
 
 const initialState: AuthState = {
   user: null,
   authenticated: false,
   loading: false,
   error: '',
-  needVerification: false,
   success: ''
 }
 
@@ -32,17 +31,14 @@ export default (state = initialState, action: AuthAction) => {
     case SET_ERROR:
       return {
         ...state,
-        error: action.payload
-      }
-    case NEED_VERIFICATION:
-      return {
-        ...state,
-        needVerification: true
+        error: action.payload,
+        success: null
       }
     case SET_SUCCESS:
       return {
         ...state,
-        success: action.payload
+        success: action.payload,
+        error: null
       }
     default: 
       return state;
