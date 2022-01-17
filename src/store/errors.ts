@@ -6,7 +6,8 @@ const firebaseErrors: any = {
     'auth/invalid-email': 'Invalid email',
     'auth/invalid-password': 'Invalid password',
     'auth/weak-password': 'Password should be at least 6 characters',
-    'auth/user-not-found': 'User not found'
+    'auth/user-not-found': 'User not found',
+    'auth/wrong-password': 'Wrong password'
 
   }; 
 

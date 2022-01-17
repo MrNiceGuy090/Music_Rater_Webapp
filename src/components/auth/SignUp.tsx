@@ -8,6 +8,7 @@ import Loader from '../Loader';
 
 export default function SignUp() {
     const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ export default function SignUp() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    dispatch(signup({ firstName, email, password }, 
+    dispatch(signup({ firstName, lastName, email, password }, 
       () => {
         navigate('/signIn');
       },
@@ -39,7 +40,7 @@ export default function SignUp() {
           <Container component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             
           {signUpError && <Alert severity="error">{signUpError}</Alert>}
-          <TextField
+            <TextField
               required
               fullWidth
               id="firstName"
@@ -47,6 +48,15 @@ export default function SignUp() {
               name="firstName"
               autoFocus
               onChange={(e) => setFirstName(e.currentTarget.value)}
+            />
+            <TextField
+              required
+              fullWidth
+              id="lastName"
+              label="Last Name"
+              name="lastName"
+              autoFocus
+              onChange={(e) => setLastName(e.currentTarget.value)}
             />
             <TextField
               required

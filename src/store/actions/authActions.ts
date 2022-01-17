@@ -17,12 +17,17 @@ export const signup = (data: SignUpData, onSuccess? : () => void, onError? : (er
         const userData: User = {
           email: data.email,
           firstName: data.firstName,
-          id: res.user.uid
+          lastName: data.lastName,
+          preferredGenres: [],
+          id: res.user.uid,
+          credits: 0
         };
-        dispatch({
-          type: SET_USER,
-          payload: userData
-        });
+        
+        // sign in user as soon as it signs up
+        // dispatch({
+        //   type: SET_USER,
+        //   payload: userData
+        // });
         dispatch({
           type: SET_SUCCESS,
           payload: 'Succesfully created an account for ' + data.firstName + "!"
@@ -66,7 +71,10 @@ export const signin = (data: SignInData,  onSuccess? : () => void, onError?: (er
       const userData: User = {
         email: userDoc.email,
         firstName: userDoc.firstName,
-        id: userDoc.id
+        lastName: userDoc.lastName,
+        preferredGenres: [],
+        id: userDoc.id,
+        credits: userDoc.credits
       };        
 
       dispatch({

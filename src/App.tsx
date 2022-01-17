@@ -1,35 +1,50 @@
-import React, { useState  } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector  } from 'react-redux';
+
 import SignIn from "./components/auth/SignIn"
 import SignUp from "./components/auth/SignUp"
 import PrivateRoute from "./components/auth/PrivateRoute"
-import Profile from "./components/user/Profile"
+import Profile from "./components/pages/Profile"
 
 import { Container, Alert } from '@mui/material'
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
-import { RootState } from './store';
 import Loader from './components/Loader';
-import { useSelector } from 'react-redux';
+import Navbar from './components/Navbar';
+import LandingPage from './components/pages/LandingPage'
+
+import './App.css';
+
+import { RootState } from './store';
+import { setSuccess } from './store/actions/authActions';
 
 function App() {
-  const { loading, error, success } = useSelector((state: RootState) => state.auth);
+  const { user, authenticated, loading, error, success } = useSelector((state: RootState) => state.auth);
 
+  const dispatch = useDispatch();
+
+  // dispaly success message only once
+  useEffect(() => {
+    return () => {
+      if(success){
+        dispatch(setSuccess(''));
+      }
+    }
+}, [])
+  
   if(loading) {
     return <Loader />;
   }
 
   return (
-    <Container>
-      {error && <Alert severity="error">{error}</Alert>}
-      {success && <Alert severity="success">{success}</Alert>}
+    <Container maxWidth = {false} disableGutters>
       <BrowserRouter>
+        <Navbar></Navbar>
+        {success && <Alert severity="success">{success}</Alert>}
         <Routes>
           <Route path="/" element={
-            <Container>
-              <SignIn/>
-              <SignUp/>
-            </Container>
-            } />
+            <LandingPage/>
+          }/>
           <Route path="/profile" element={
             <PrivateRoute>
               <Profile/>

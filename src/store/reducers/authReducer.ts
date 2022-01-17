@@ -32,13 +32,13 @@ export default (state = initialState, action: AuthAction) => {
       return {
         ...state,
         error: action.payload,
-        success: null
+        success: ''
       }
     case SET_SUCCESS:
       return {
         ...state,
         success: action.payload,
-        error: null
+        error: ''
       }
     default: 
       return state;
