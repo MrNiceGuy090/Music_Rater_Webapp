@@ -18,9 +18,11 @@ export const signup = (data: SignUpData, onSuccess? : () => void, onError? : (er
           email: data.email,
           firstName: data.firstName,
           lastName: data.lastName,
-          preferredGenres: [],
           id: res.user.uid,
-          credits: 0
+          credits: 0,
+          profileImage: "",
+          finnishedInit: false,
+          preferredGenres: []
         };
         
         // sign in user as soon as it signs up
@@ -43,24 +45,6 @@ export const signup = (data: SignUpData, onSuccess? : () => void, onError? : (er
   }
 }
 
-// Get user by id
-export const getUserById = (id: string): ThunkAction<void, RootState, null, AuthAction> => {
-  return async dispatch => {
-    try {
-      const user = await getDoc(doc(db, 'users', id));
-      if(user.exists()) {
-        const userData = user.data() as User;
-        dispatch({
-          type: SET_USER,
-          payload: userData
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-}
-
 // Log in
 export const signin = (data: SignInData,  onSuccess? : () => void, onError?: (error: string) => void): ThunkAction<void, RootState, null, AuthAction> => {
   return async dispatch => {
@@ -72,9 +56,11 @@ export const signin = (data: SignInData,  onSuccess? : () => void, onError?: (er
         email: userDoc.email,
         firstName: userDoc.firstName,
         lastName: userDoc.lastName,
-        preferredGenres: [],
         id: userDoc.id,
-        credits: userDoc.credits
+        credits: userDoc.credits,
+        profileImage: userDoc.profileImage,
+        finnishedInit: userDoc.finnishedInit,
+        preferredGenres: userDoc.preferredGenres
       };        
 
       dispatch({
@@ -98,6 +84,35 @@ export const signout = (): ThunkAction<void, RootState, null, AuthAction> => {
         type: SIGN_OUT
       });
     } catch (err: any) {
+      console.log(err);
+    }
+  }
+}
+
+// set User
+export const setUser = (user: User): ThunkAction<void, RootState, null, AuthAction> => {
+  return dispatch => {
+    dispatch({
+      type: SET_USER,
+      payload: user
+    });
+  }
+}
+
+
+// Get user by id
+export const getUserById = (id: string): ThunkAction<void, RootState, null, AuthAction> => {
+  return async dispatch => {
+    try {
+      const user = await getDoc(doc(db, 'users', id));
+      if(user.exists()) {
+        const userData = user.data() as User;
+        dispatch({
+          type: SET_USER,
+          payload: userData
+        });
+      }
+    } catch (err) {
       console.log(err);
     }
   }
@@ -132,3 +147,5 @@ export const setSuccess = (msg: string): ThunkAction<void, RootState, null, Auth
     });
   }
 }
+
+

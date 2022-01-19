@@ -115,7 +115,7 @@ const ResponsiveAppBar = () => {
           </Typography>
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp"  />
+              <Avatar alt="Profile picture" src={auth.user.profileImage} />
             </IconButton>
             <Menu
               sx={{ mt: '45px' }}
@@ -147,7 +147,7 @@ const ResponsiveAppBar = () => {
             </Menu>
           </Box>
           </Toolbar>
-            : false
+            : null
           }
         </Toolbar>
       </Container>

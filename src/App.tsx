@@ -6,7 +6,7 @@ import SignUp from "./components/auth/SignUp"
 import PrivateRoute from "./components/auth/PrivateRoute"
 import Profile from "./components/pages/Profile"
 
-import { Container, Alert } from '@mui/material'
+import { Container, Alert, Box } from '@mui/material'
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 
 import Loader from './components/Loader';
@@ -41,18 +41,20 @@ function App() {
       <BrowserRouter>
         <Navbar></Navbar>
         {success && <Alert severity="success">{success}</Alert>}
-        <Routes>
-          <Route path="/" element={
-            <LandingPage/>
-          }/>
-          <Route path="/profile" element={
-            <PrivateRoute>
-              <Profile/>
-            </PrivateRoute>
-            } />
-          <Route path="/signUp" element={<SignUp/>} />
-          <Route path="/signIn" element={<SignIn/>} />
-        </Routes>
+        <Box sx={{m:"30px", mt:"50px"}}>
+          <Routes>
+            <Route path="/" element={
+              <LandingPage/>
+            }/>
+            <Route path="/profile" element={
+              <PrivateRoute>
+                <Profile/>
+              </PrivateRoute>
+              } />
+            <Route path="/signUp" element={<SignUp/>} />
+            <Route path="/signIn" element={<SignIn/>} />
+          </Routes>
+        </Box>
       </BrowserRouter>
     </Container>
   );

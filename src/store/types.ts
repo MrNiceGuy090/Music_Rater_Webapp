@@ -10,7 +10,9 @@ export interface User {
   email: string;
   id: string;
   credits: number;
-  preferredGenres: []
+  profileImage: string,
+  finnishedInit: boolean,
+  preferredGenres: string[]
 }
 
 export interface AuthState {
@@ -18,7 +20,7 @@ export interface AuthState {
   authenticated: boolean;
   loading: boolean;
   error: string;
-  success: string;
+  success: string
 }
 
 export interface SignUpData {
