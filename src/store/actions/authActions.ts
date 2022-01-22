@@ -1,10 +1,11 @@
 import { ThunkAction } from 'redux-thunk';
 
-import { SignUpData, AuthAction, SET_USER, User, SIGN_OUT, SignInData, SET_ERROR, SET_SUCCESS, SET_LOADING } from '../types';
+import { SignUpData, AuthAction, SET_USER, User, SIGN_OUT, SignInData, SET_LOADING } from '../types';
 import { RootState } from '..';
 import { localAuth, db } from '../../firebase';
 import * as firebaseAuth from 'firebase/auth';
-import { doc, collection, setDoc, getDoc, addDoc, updateDoc  } from 'firebase/firestore';
+import { doc, setDoc, getDoc  } from 'firebase/firestore';
+import { setSuccess } from '../../store/actions/alertActions';
 
 import firebaseErrors from '../../store/errors';
 
@@ -30,10 +31,7 @@ export const signup = (data: SignUpData, onSuccess? : () => void, onError? : (er
         //   type: SET_USER,
         //   payload: userData
         // });
-        dispatch({
-          type: SET_SUCCESS,
-          payload: 'Succesfully created an account for ' + data.firstName + "!"
-        });
+        dispatch(setSuccess('Succesfully created an account for ' + data.firstName + "!"));
         await setDoc(doc(db, '/users', res.user.uid), userData);
         
         if (onSuccess) onSuccess();
@@ -124,26 +122,6 @@ export const setLoading = (value: boolean): ThunkAction<void, RootState, null, A
     dispatch({
       type: SET_LOADING,
       payload: value
-    });
-  }
-}
-
-// Set error
-export const setError = (msg: string): ThunkAction<void, RootState, null, AuthAction> => {
-  return dispatch => {
-    dispatch({
-      type: SET_ERROR,
-      payload: msg
-    });
-  }
-}
-
-// Set success
-export const setSuccess = (msg: string): ThunkAction<void, RootState, null, AuthAction> => {
-  return dispatch => {
-    dispatch({
-      type: SET_SUCCESS,
-      payload: msg
     });
   }
 }

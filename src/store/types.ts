@@ -3,6 +3,10 @@ export const SIGN_OUT = 'SIGN_OUT';
 export const SET_LOADING = 'SET_LOADING';
 export const SET_ERROR = 'SET_ERROR';
 export const SET_SUCCESS = 'SET_SUCCESS';
+export const SET_RATING = 'SET_RATING';
+export const SET_RATER = 'SET_RATER';
+export const SET_TRACK = 'SET_TRACK';
+export const SET_MESSAGE = 'SET_MESSAGE';
 
 export interface User {
   firstName: string;
@@ -23,6 +27,18 @@ export interface AuthState {
   success: string
 }
 
+export interface AlertState {
+  error: string;
+  success: string;
+}
+
+export interface RateState{
+  rating: number;
+  track: string;
+  rater: string;
+  message: string;
+}
+
 export interface SignUpData {
   firstName: string;
   lastName: string;
@@ -36,6 +52,7 @@ export interface SignInData {
 }
 
 // Actions
+  // Auth
 interface SetUserAction {
   type: typeof SET_USER;
   payload: User;
@@ -50,6 +67,7 @@ interface SignOutAction {
   type: typeof SIGN_OUT;
 }
 
+  // Alert
 interface SetErrorAction {
   type: typeof SET_ERROR;
   payload: string;
@@ -60,4 +78,27 @@ interface SetSuccessAction {
   payload: string;
 }
 
-export type AuthAction = SetUserAction | SetLoadingAction | SignOutAction | SetErrorAction | SetSuccessAction;
+  // Rating
+interface SetRatingAction {
+  type: typeof SET_RATING;
+  payload: number;
+}
+
+interface SetRaterAction {
+  type: typeof SET_RATER;
+  payload: string;
+}
+
+interface SetTrackAction {
+  type: typeof SET_TRACK;
+  payload: string;
+}
+
+interface SetMessageAction {
+  type: typeof SET_MESSAGE;
+  payload: string;
+}
+
+export type AuthAction = SetUserAction | SetLoadingAction | SignOutAction;
+export type AlertAction =  SetErrorAction | SetSuccessAction;
+export type RateAction = SetRatingAction | SetRaterAction | SetTrackAction| SetMessageAction;

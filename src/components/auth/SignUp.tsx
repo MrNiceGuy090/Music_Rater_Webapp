@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { signup, setError } from '../../store/actions/authActions';
+import { signup } from '../../store/actions/authActions';
+import { setError } from '../../store/actions/alertActions';
 import { useNavigate } from 'react-router-dom';
 
 import { Alert, Button, TextField, FormControlLabel, Checkbox, Typography, Container } from '@mui/material';

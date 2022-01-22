@@ -1,6 +1,7 @@
 import React, { useState  } from 'react';
 import { useDispatch  } from 'react-redux';
-import { signin, setError, setSuccess } from '../../store/actions/authActions';
+import { signin } from '../../store/actions/authActions';
+import { setError, setSuccess } from '../../store/actions/alertActions';
 
 import { useNavigate } from 'react-router-dom';
 import { Alert, Button, TextField, FormControlLabel, Checkbox, Typography, Container} from '@mui/material';
@@ -21,8 +22,8 @@ export default function SignIn() {
 
     dispatch( signin({ email, password }, 
       () =>{
-        navigate('/profile');
         dispatch(setSuccess(''));
+        navigate('/profile');
       },
       (error) => { 
         dispatch(setError('SignIn error: ' + error));

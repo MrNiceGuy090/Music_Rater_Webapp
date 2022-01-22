@@ -118,7 +118,6 @@ const ProfileFinalizer = () => {
                     : null}
                     {activeStep === 1?
                     <Container>
-                    <FormControl >
                         <Typography variant='h5'>Select up to 3 preferred music genres</Typography>
                         <Select
                         multiple
@@ -141,7 +140,6 @@ const ProfileFinalizer = () => {
                             </MenuItem>
                         ))}
                         </Select>
-                    </FormControl>
                     </Container>
                   : null}
                     {activeStep === steps.length-1 ? 

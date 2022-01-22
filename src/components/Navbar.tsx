@@ -3,18 +3,15 @@ import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, 
 import { Link } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 
-import { useDispatch, useSelector  } from 'react-redux';
+import { useSelector  } from 'react-redux';
 import { RootState } from '../store';
 import { signout } from '../store/actions/authActions';
-
-const pages = ['Products', 'Pricing', 'Blog'];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   
   const auth: any = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -33,7 +30,7 @@ const ResponsiveAppBar = () => {
 
   const signOut = () => {
     console.log("asd");
-    dispatch(signout());
+    signout();
   }
 
   return (
@@ -46,7 +43,7 @@ const ResponsiveAppBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            LOGO
+            MusicRater
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -78,11 +75,16 @@ const ResponsiveAppBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              <Link onClick={handleCloseNavMenu} to="/upload" style={{ textDecoration: 'none' }}> 
+                <MenuItem key='upload'>
+                  <Typography textAlign="center">Upload</Typography>
                 </MenuItem>
-              ))}
+              </Link>
+              <Link onClick={handleCloseNavMenu} to="/discover" style={{ textDecoration: 'none' }}> 
+                <MenuItem key='discover'>
+                  <Typography textAlign="center">Discover</Typography>
+                </MenuItem>
+              </Link>
             </Menu>
           </Box>
           <Typography
@@ -91,18 +93,19 @@ const ResponsiveAppBar = () => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            LOGO
+            MusicRater
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+              <Link onClick={handleCloseNavMenu} to="/upload" style={{ textDecoration: 'none' }}> 
+                <Button key='upload' sx={{ my: 2, color: 'white', display: 'block' }}>
+                  <Typography textAlign="center">Upload</Typography>
+                </Button>
+              </Link>
+              <Link onClick={handleCloseNavMenu} to="/discover" style={{ textDecoration: 'none' }}> 
+                <Button key='discover' sx={{ my: 2, color: 'white', display: 'block' }}>
+                  <Typography textAlign="center">Discover</Typography>
+                </Button>
+              </Link>
           </Box>
 
          { auth.authenticated ? 

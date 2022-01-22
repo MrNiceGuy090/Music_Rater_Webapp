@@ -5,6 +5,8 @@ import SignIn from "./components/auth/SignIn"
 import SignUp from "./components/auth/SignUp"
 import PrivateRoute from "./components/auth/PrivateRoute"
 import Profile from "./components/pages/Profile"
+import Uploader from "./components/pages/Uploader"
+import Discover from "./components/pages/Discover"
 
 import { Container, Alert, Box } from '@mui/material'
 import { BrowserRouter, Route, Routes } from "react-router-dom"
@@ -16,22 +18,10 @@ import LandingPage from './components/pages/LandingPage'
 import './App.css';
 
 import { RootState } from './store';
-import { setSuccess } from './store/actions/authActions';
 
 function App() {
-  const { user, authenticated, loading, error, success } = useSelector((state: RootState) => state.auth);
+  const { loading, success } = useSelector((state: RootState) => state.auth);
 
-  const dispatch = useDispatch();
-
-  // dispaly success message only once
-  useEffect(() => {
-    return () => {
-      if(success){
-        dispatch(setSuccess(''));
-      }
-    }
-}, [])
-  
   if(loading) {
     return <Loader />;
   }
@@ -53,6 +43,14 @@ function App() {
               } />
             <Route path="/signUp" element={<SignUp/>} />
             <Route path="/signIn" element={<SignIn/>} />
+            <Route path="/upload" element={
+              <PrivateRoute>
+                <Uploader/>
+              </PrivateRoute>} />
+            <Route path="/discover" element={
+              <PrivateRoute>
+                <Discover/>
+              </PrivateRoute>} />
           </Routes>
         </Box>
       </BrowserRouter>
