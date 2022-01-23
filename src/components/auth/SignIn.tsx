@@ -22,12 +22,9 @@ export default function SignIn() {
 
     dispatch( signin({ email, password }, 
       () =>{
-        dispatch(setSuccess(''));
         navigate('/profile');
       },
       (error) => { 
-        dispatch(setError('SignIn error: ' + error));
-        console.log(error);
         setLoading(false) ;
         setSignInError(error);
         

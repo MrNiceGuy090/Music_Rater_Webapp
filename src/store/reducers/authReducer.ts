@@ -3,9 +3,7 @@ import { AuthAction, AuthState, SET_USER, SET_LOADING, SIGN_OUT} from '../types'
 const initialState: AuthState = {
   user: null,
   authenticated: false,
-  loading: false,
-  error: '',
-  success: ''
+  loading: false
 }
 
 export default (state = initialState, action: AuthAction) => {

@@ -18,9 +18,11 @@ import LandingPage from './components/pages/LandingPage'
 import './App.css';
 
 import { RootState } from './store';
+import Ratings from './components/pages/Ratings';
 
 function App() {
-  const { loading, success } = useSelector((state: RootState) => state.auth);
+  const { success, error } = useSelector((state: RootState) => state.alert);
+  const { loading } = useSelector((state: RootState) => state.auth);
 
   if(loading) {
     return <Loader />;
@@ -31,6 +33,7 @@ function App() {
       <BrowserRouter>
         <Navbar></Navbar>
         {success && <Alert severity="success">{success}</Alert>}
+        {error && <Alert severity="error">{error}</Alert>}
         <Box sx={{m:"30px", mt:"50px"}}>
           <Routes>
             <Route path="/" element={
@@ -50,6 +53,10 @@ function App() {
             <Route path="/discover" element={
               <PrivateRoute>
                 <Discover/>
+              </PrivateRoute>} />            
+            <Route path="/ratings" element={
+              <PrivateRoute>
+                <Ratings/>
               </PrivateRoute>} />
           </Routes>
         </Box>

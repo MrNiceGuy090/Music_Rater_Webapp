@@ -8,6 +8,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../../store/actions/authActions';
 import { RootState } from '../../store';
+import { setSuccess, setError } from '../../store/actions/alertActions';
 
 let steps = ["Set a profile picture", "Select up to 3 preferred genres"]
 
@@ -23,6 +24,9 @@ const ProfileFinalizer = () => {
 
   useEffect(() => {
     getDocs(collection(db, '/genres')).then((snapshot)=> setGenres(snapshot.docs[0].data().names));
+    return () => {
+      dispatch(setSuccess(''))
+    }
   }, []);
 
   
@@ -66,6 +70,10 @@ const ProfileFinalizer = () => {
   };
 
   const handleSubmit = () => {
+      if(!fileUrl || !selectedGenres.length){
+        dispatch(setError("All fields are mandatory"))
+        return
+      }
       submitImage();
       let user = auth.user
       user.finnishedInit = true

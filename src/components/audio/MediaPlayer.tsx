@@ -1,5 +1,4 @@
-import React, {useState, useRef} from 'react';
-import { useTheme } from '@mui/material/styles';
+import React, { useRef} from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -7,12 +6,6 @@ import Typography from '@mui/material/Typography';
 
 export default function MediaPlayer(props: any) {
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  const playAudio = () => {
-    const node = audioRef.current;
-    if (node != null)
-        node.play();
-  };
 
   return (
     <Card sx={{ display: 'flex', width: "500px"}}>
@@ -29,8 +22,8 @@ export default function MediaPlayer(props: any) {
           <Typography variant="subtitle1" color="text.secondary" component="div">
             {props.artistName}
           </Typography>
-          <audio controls ref={audioRef} style={{marginTop:"6px"}}>
-            <source src={props.audio}>
+          <audio controls ref={audioRef} style={{marginTop:"6px"}} src={props.audio}>
+            <source >
             </source>
           </audio>
         </CardContent>

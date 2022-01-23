@@ -1,10 +1,10 @@
 import { ThunkAction } from 'redux-thunk';
 
-import { RateAction, SET_TRACK, SET_MESSAGE, SET_RATING, SET_RATER } from '../types';
+import { RateAction, SET_TRACK, SET_REVIEW, SET_RATING, SET_RATER } from '../types';
 import { RootState } from '..';
 
 
-export const setWholeState = (rating: number, rater: string, track: string, message: string ): ThunkAction<void, RootState, null, RateAction> => {
+export const setWholeState = (rating: number, rater: string, track: string, review: string ): ThunkAction<void, RootState, null, RateAction> => {
     return dispatch => {
       dispatch({
         type: SET_TRACK,
@@ -19,8 +19,8 @@ export const setWholeState = (rating: number, rater: string, track: string, mess
         payload: rating
       });
       dispatch({
-        type: SET_MESSAGE,
-        payload: message
+        type: SET_REVIEW,
+        payload: review
       });
     }
   }
@@ -52,11 +52,11 @@ export const setTrack = (track: string): ThunkAction<void, RootState, null, Rate
     }
   }
 
-export const setMessage = (message: string): ThunkAction<void, RootState, null, RateAction> => {
+export const setReview = (review: string): ThunkAction<void, RootState, null, RateAction> => {
     return dispatch => {
       dispatch({
-        type: SET_MESSAGE,
-        payload: message
+        type: SET_REVIEW,
+        payload: review
       });
     }
   }

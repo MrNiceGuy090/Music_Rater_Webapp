@@ -6,7 +6,7 @@ export const SET_SUCCESS = 'SET_SUCCESS';
 export const SET_RATING = 'SET_RATING';
 export const SET_RATER = 'SET_RATER';
 export const SET_TRACK = 'SET_TRACK';
-export const SET_MESSAGE = 'SET_MESSAGE';
+export const SET_REVIEW = 'SET_REVIEW';
 
 export interface User {
   firstName: string;
@@ -23,8 +23,6 @@ export interface AuthState {
   user: User | null;
   authenticated: boolean;
   loading: boolean;
-  error: string;
-  success: string
 }
 
 export interface AlertState {
@@ -36,7 +34,7 @@ export interface RateState{
   rating: number;
   track: string;
   rater: string;
-  message: string;
+  review: string;
 }
 
 export interface SignUpData {
@@ -94,11 +92,11 @@ interface SetTrackAction {
   payload: string;
 }
 
-interface SetMessageAction {
-  type: typeof SET_MESSAGE;
+interface SetReviewAction {
+  type: typeof SET_REVIEW;
   payload: string;
 }
 
 export type AuthAction = SetUserAction | SetLoadingAction | SignOutAction;
 export type AlertAction =  SetErrorAction | SetSuccessAction;
-export type RateAction = SetRatingAction | SetRaterAction | SetTrackAction| SetMessageAction;
+export type RateAction = SetRatingAction | SetRaterAction | SetTrackAction| SetReviewAction;

@@ -2,15 +2,17 @@ import React, {useState, useEffect} from 'react';
 import { FormControl, Button, Container, Typography, Avatar, Select, MenuItem, InputLabel, Alert, TextField } from '@mui/material';
 
 import {db, storageRef} from '../../firebase'
-import { doc, collection, setDoc, getDocs } from "firebase/firestore";
+import { doc, collection, setDoc, getDocs, updateDoc, increment } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
-import { setSuccess } from '../../store/actions/alertActions';
+import { setSuccess, setError } from '../../store/actions/alertActions';
+import { setUser } from '../../store/actions/authActions';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../store';
-
+import Loader from '../Loader';
 
 const Uploader = () => {
+    const [isLoading, setLoading] = useState(false);
     const [audioFile, setAudioFile] = useState(null);
     const [audioFileName, setAudioFileName] = useState(null);
     const [trackName, setTrackName] = useState('');
@@ -27,10 +29,7 @@ const Uploader = () => {
         getDocs(collection(db, '/genres')).then((snapshot)=> setGenres(snapshot.docs[0].data().names));
         console.log(auth.success)
         return () => {
-            console.log(auth.success)
-            if(auth.success){
-              dispatch(setSuccess(''));
-            }
+            dispatch(setSuccess(''));
           }
       }, []);
 
@@ -48,6 +47,12 @@ const Uploader = () => {
     }
 
     const handleSubmit = async (e: any) => {
+        setLoading(true)
+        if(!trackName || !audioFile || !artistName || !trackCover || !selectedGenre ){
+            dispatch(setError('All fields are mandatory'))
+            setLoading(false)
+            return
+        }
         const audioRef = ref(storageRef,'Tracks/'+auth.user.id+'-'+trackName)
         if(audioFile !== null)
             await uploadBytes(audioRef, audioFile)
@@ -67,9 +72,25 @@ const Uploader = () => {
             genre: selectedGenre
         });
         auth.success = true
-        dispatch(setSuccess('Success'));
+        updateDoc(doc(db, '/users', auth.user.id), {
+          credits: increment(-1)
+        })
+        dispatch(setUser({
+          ...auth.user,
+          credits: auth.user.credits -1
+        }))
+        dispatch(setSuccess('Song has been uploaded successfully!'));
+        setLoading(false)
     }
-    
+   
+  if (auth.user.credits <= 0){
+      return (
+          <Container>
+            <Typography variant="h4">Unfortunately you do not have enough credits to upload a song :(</Typography>
+            <Typography variant="h6">Rate songs in discover section to gain credits</Typography>
+          </Container>
+      )
+  }  
   return(
     <Container sx={{display:"flex"}}>
         <Container >
@@ -140,7 +161,8 @@ const Uploader = () => {
             </Container>
             <br></br>
             <Container>
-                <Button onClick={handleSubmit} variant="contained" >Submit</Button>       
+                <Button onClick={handleSubmit} variant="contained" sx={{mr: "20px"}}>Submit</Button> 
+                {isLoading ? <Loader></Loader> : false}
             </Container>     
         </Container>
             {trackCover ? 

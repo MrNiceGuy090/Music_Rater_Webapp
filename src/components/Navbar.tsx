@@ -3,7 +3,7 @@ import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, 
 import { Link } from "react-router-dom";
 import MenuIcon from '@mui/icons-material/Menu';
 
-import { useSelector  } from 'react-redux';
+import { useSelector, useDispatch  } from 'react-redux';
 import { RootState } from '../store';
 import { signout } from '../store/actions/authActions';
 
@@ -12,6 +12,7 @@ const ResponsiveAppBar = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   
   const auth: any = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -29,8 +30,7 @@ const ResponsiveAppBar = () => {
   };
 
   const signOut = () => {
-    console.log("asd");
-    signout();
+    dispatch(signout());
   }
 
   return (
@@ -84,6 +84,11 @@ const ResponsiveAppBar = () => {
                 <MenuItem key='discover'>
                   <Typography textAlign="center">Discover</Typography>
                 </MenuItem>
+              </Link>              
+              <Link onClick={handleCloseNavMenu} to="/ratings" style={{ textDecoration: 'none' }}> 
+                <MenuItem key='ratings'>
+                  <Typography textAlign="center">Ratings</Typography>
+                </MenuItem>
               </Link>
             </Menu>
           </Box>
@@ -104,6 +109,11 @@ const ResponsiveAppBar = () => {
               <Link onClick={handleCloseNavMenu} to="/discover" style={{ textDecoration: 'none' }}> 
                 <Button key='discover' sx={{ my: 2, color: 'white', display: 'block' }}>
                   <Typography textAlign="center">Discover</Typography>
+                </Button>
+              </Link>              
+              <Link onClick={handleCloseNavMenu} to="/ratings" style={{ textDecoration: 'none' }}> 
+                <Button key='ratings' sx={{ my: 2, color: 'white', display: 'block' }}>
+                  <Typography textAlign="center">Ratings</Typography>
                 </Button>
               </Link>
           </Box>

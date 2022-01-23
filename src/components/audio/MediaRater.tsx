@@ -1,21 +1,29 @@
-import React, {useState} from 'react';
+import React from 'react';
+import { Box, Rating, Typography } from '@mui/material';
 
-import { CardMedia, Card, Box, Rating, Typography } from '@mui/material';
-import MediaPlayer from '../audio/MediaPlayer';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store';
+
+import { setRating, setRater } from '../../store/actions/rateActions';
 
 const MediaRater = () => {
-  const [rating, setRating] = useState<number | null>(0);
+  const rate: any = useSelector((state: RootState) => state.rate);
+  const auth: any = useSelector((state: RootState) => state.auth)
+  const dispatch = useDispatch();
+
   return(
     <Box sx={{display: "flex"}} >
         <Rating name="customized-10" max={10} precision={0.5} 
-            value={rating}
+            value={rate.rating}
             onChange={(event, newValue) => {
-                setRating(newValue);
+                if(newValue == null) newValue = 0;
+                dispatch(setRating(newValue));
+                dispatch(setRater(auth.user.id))
             }}
         /> 
-        {rating !== null && (
+        {rate.rating !== null && (
             <Typography  variant="h6">
-                {rating}
+                {rate.rating}
             </Typography>
         )}
     </Box>

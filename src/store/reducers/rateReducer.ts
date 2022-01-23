@@ -1,10 +1,10 @@
-import { RateAction, RateState, SET_RATER, SET_MESSAGE, SET_RATING, SET_TRACK } from '../types';
+import { RateAction, RateState, SET_RATER, SET_REVIEW, SET_RATING, SET_TRACK } from '../types';
 
 const initialState: RateState = {
     rating: 0,
     track: '',
     rater: '',
-    message: ''
+    review: ''
 }
 
 export default (state = initialState, action: RateAction) => {
@@ -24,10 +24,10 @@ export default (state = initialState, action: RateAction) => {
         ...state,
         track: action.payload
       }
-    case SET_MESSAGE:
+    case SET_REVIEW:
       return {
         ...state,
-        message: action.payload
+        review: action.payload
       }
     default: 
       return state;

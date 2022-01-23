@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, Avatar, Typography, Box, Button, Stack, Divider, Paper } from '@mui/material';
+import { Avatar, Typography, Box, Button, Stack, Divider, Paper } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import { useSelector } from 'react-redux';

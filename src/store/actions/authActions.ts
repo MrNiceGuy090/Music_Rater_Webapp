@@ -5,7 +5,7 @@ import { RootState } from '..';
 import { localAuth, db } from '../../firebase';
 import * as firebaseAuth from 'firebase/auth';
 import { doc, setDoc, getDoc  } from 'firebase/firestore';
-import { setSuccess } from '../../store/actions/alertActions';
+import { setSuccess, setError } from '../../store/actions/alertActions';
 
 import firebaseErrors from '../../store/errors';
 
@@ -37,7 +37,7 @@ export const signup = (data: SignUpData, onSuccess? : () => void, onError? : (er
         if (onSuccess) onSuccess();
       }
     } catch (error: any) {
-      console.log(error);
+      dispatch(setError(''))
       if (onError) onError(firebaseErrors[error.code]);
     }
   }
@@ -65,9 +65,10 @@ export const signin = (data: SignInData,  onSuccess? : () => void, onError?: (er
         type: SET_USER,
         payload: userData
       });
+      dispatch(setSuccess(''))
       if(onSuccess) onSuccess();
     } catch (err: any) {
-      console.log(err.code);
+      dispatch(setError(''))
       if(onError)onError(firebaseErrors[err.code]);
     }
   }

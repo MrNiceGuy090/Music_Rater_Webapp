@@ -20,14 +20,16 @@ export default function SignUp() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if( !firstName || !lastName || !email || !password){
+      setSignUpError("All fields are mandatory")
+      return
+    }
     setLoading(true);
     dispatch(signup({ firstName, lastName, email, password }, 
       () => {
         navigate('/signIn');
       },
       (error) => {
-        dispatch(setError('SignUp error: ' + error));
-        console.log(error);
         setSignUpError(error);
         setLoading(false);
       }));
