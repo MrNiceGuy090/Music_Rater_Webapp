@@ -35,7 +35,6 @@ const Profile = () => {
             sx={{ width: 200, height: 200, padding:'35px' }}
             
           />
-          <Button>Change image</Button>
           </Box>
           <Box>
             <Typography variant="h4" color="secondary.contrastText" sx={{ m: 2 }} >{auth.user.firstName} {auth.user.lastName} </Typography>
@@ -48,7 +47,6 @@ const Profile = () => {
                 return <Item key={i}>{val}</Item>
               })}
             </Stack>
-            <Button sx={{ m: 1 }}>Edit</Button>
           </Box>
         </Paper>
       : <ProfileFinalizer/>

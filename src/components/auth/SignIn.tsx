@@ -48,6 +48,8 @@ export default function SignIn() {
               autoFocus
               onChange={(e) => setEmail(e.currentTarget.value)}
             />
+            <br></br>
+            <br></br>
             <TextField
               required
               fullWidth
@@ -57,10 +59,8 @@ export default function SignIn() {
               id="password"
               onChange={(e) => setPassword(e.currentTarget.value)}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            <br></br>
+            <br></br>
             { !loading ?
               <Button
               type="submit"

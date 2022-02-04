@@ -8,10 +8,12 @@ const LandingPage = () => {
   return(
     <Grid container>
         <Grid item xs={6}>
-            <Typography variant="h3">Welcome to ur page</Typography>
+            <Typography variant="h3">Welcome to MusicRater</Typography>
         </Grid>
         <Grid item xs={6}>
             <SignIn/>
+            <br></br> 
+            <br></br>
             <SignUp/>
         </Grid>
     </Grid>
